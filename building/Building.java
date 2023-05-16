@@ -10,6 +10,7 @@ public final class Building {
     public final int floorCounts;
     private final Elevator firstElevator, secondElevator;
     private final Engines engines;
+    private final PrintStream out;
 
     public Building(int floorCounts, PrintStream out, int elevatorSpeedInSeconds) {
         this.floorCounts = floorCounts;
@@ -26,16 +27,20 @@ public final class Building {
                 out, Color.ANSI_BLUE
         );
         engines = new Engines(firstElevator, secondElevator, elevatorSpeedInSeconds, out);
+        this.out = out;
     }
 
-    public void sendRequest(int floorNumber, Direction direction) {
+    public void sendRequest(int floorNumber) {
+        out.printf("Request to floor %d was sent\n", floorNumber);
         if (floorNumber > floorCounts) {
             throw new RuntimeException("Max floor value is %s".formatted(this.floorCounts));
         }
         if (firstElevator.getDiffFromFloor(floorNumber) < secondElevator.getDiffFromFloor(floorNumber)) {
             firstElevator.assignDirectionWithFloor(floorNumber);
+            out.printf("FirstElevator was assigned to floor %d\n", floorNumber);
         } else {
             secondElevator.assignDirectionWithFloor(floorNumber);
+            out.printf("SecondElevator was assigned to floor %d\n", floorNumber);
         }
     }
 
