@@ -65,12 +65,13 @@ public final class People {
         return (int) (random() * (building.floorCounts - 1)) + 1;
     }
 
-    public static int getRandomFloor(Building building, PrintStream out) {
+    public static int getRandomFloor(Elevator elevator, Building building, PrintStream out) {
         int randomFloor = (int) (random() * (building.floorCounts - 1)) + 1;
         out.printf(
-                "%sSome person choose floor %s to go there%s\n",
+                "%sSome person choose floor %s in elevator %s to go there%s\n",
                 color,
                 randomFloor,
+                elevator.getName(),
                 ANSI_RESET
         );
         return randomFloor;

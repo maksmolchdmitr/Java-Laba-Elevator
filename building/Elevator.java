@@ -1,6 +1,7 @@
 package building;
 
 import color.Color;
+import lombok.Getter;
 
 import java.io.PrintStream;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Elevator {
     private final static int DOOR_HOLDING_TIME_IN_SECONDS = 10;
+    @Getter
     private final String name;
     private int currentFloor;
     private Direction currentDirection = null;
@@ -69,7 +71,9 @@ public class Elevator {
             addPeopleFloor();
         }
         thinkAboutWhereGo();
-        printCurrentState(out);
+        if (this.currentDirection != null) {
+            printCurrentState(out);
+        }
         if (statusIsStayed) {
             SECONDS.sleep(DOOR_HOLDING_TIME_IN_SECONDS);
             closeDoor(out);
@@ -77,7 +81,7 @@ public class Elevator {
     }
 
     private void addPeopleFloor() {
-        this.floorsToStayOn.add(new Floor(People.getRandomFloor(building, out), false));
+        this.floorsToStayOn.add(new Floor(People.getRandomFloor(this, building, out), false));
     }
 
     private void thinkAboutWhereGo() {
