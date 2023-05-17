@@ -7,8 +7,7 @@ import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import static building.Direction.DOWN;
-import static building.Direction.UP;
+import static building.Direction.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Elevator {
@@ -16,7 +15,7 @@ public class Elevator {
     @Getter
     private final String name;
     private int currentFloor;
-    private Direction currentDirection = null;
+    private Direction currentDirection = STAYED;
     private final Building building;
     private final Set<Floor> floorsToStayOn = new HashSet<>();
     private final PrintStream out;
@@ -50,7 +49,7 @@ public class Elevator {
     }
 
     public void move() throws InterruptedException {
-        if (this.currentDirection != null) {
+        if (this.currentDirection != STAYED) {
             int newFloor = currentFloor + (currentDirection == DOWN ? -1 : 1);
             if (newFloor > building.floorCounts || newFloor < 1) {
                 newFloor = currentFloor;
@@ -71,7 +70,7 @@ public class Elevator {
             addPeopleFloor();
         }
         thinkAboutWhereGo();
-        if (this.currentDirection != null) {
+        if (this.currentDirection != STAYED) {
             printCurrentState(out);
         }
         if (statusIsStayed) {
@@ -86,7 +85,7 @@ public class Elevator {
 
     private void thinkAboutWhereGo() {
         if (this.floorsToStayOn.isEmpty()) {
-            this.currentDirection = null;
+            this.currentDirection = STAYED;
         } else {
             calculateNewDirection();
         }
