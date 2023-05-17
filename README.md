@@ -1,5 +1,7 @@
 # Java-Laba-Elevator
 
-![изображение](https://github.com/maksmolchdmitr/Java-Laba-Elevator/assets/62752481/103475fa-e496-45ca-8a74-8e107c608a31)
+Example result of starting program
+
+![image](https://github.com/maksmolchdmitr/Java-Laba-Elevator/assets/62752481/df6470bc-7ad4-43bd-858d-478be7edac0c)
 
 ...
